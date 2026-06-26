@@ -3,97 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشغل المسلسلات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300&display=swap" rel="stylesheet">
+    <title>تطبيق الواجهة السوداء</title>
+    <!-- استدعاء خط Cairo من جوجل ليعمل بشكل صحيح -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;900&display=swap" rel="stylesheet">
+    
     <style>
+        /* إعدادات الخلفية السوداء الداكنة جداً وتوسيط المحتوى */
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
+            background-color: #050505; /* لون أسود داكن جداً بناءً على طلبك */
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* لترتيب الصورة في الأعلى والأزرار بالأسفل */
+            justify-content: flex-start; /* تم التعديل لرفع المحتوى والصورة إلى الأعلى قليلاً */
             align-items: center;
+            gap: 20px; /* تقليل المسافة الإجمالية لتتناسب مع النص الجديد */
+            min-height: 100vh; /* ملء الشاشة بالكامل */
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
         }
 
-        .container {
+        /* تنسيق حاوية الصورة العلوية */
+        .top-image-container {
             width: 100%;
-            max-width: 900px;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px; /* إزاحة بسيطة من السقف العلوي للشاشة */
+            margin-bottom: 5px; 
+        }
+
+        .top-image-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 250px; /* تحديد أقصى ارتفاع مريح للعين */
+            border-radius: 8px; /* حواف دائرية خفيفة للصورة العلوية */
+            object-fit: contain;
+        }
+
+        /* تنسيق النص الذهبي أسفل الصورة */
+        .subtitle-text {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 300; /* وزن الخط المطلوب */
+            font-size: 30px; /* حجم الخط المطلوب (300 تم تطبيقها كوزن وحجم متناسق 30px) */
+            color: #FFD700; /* لون ذهبي ناصع ومميز */
+            margin: 0 0 30px 0; /* مسافة أسفل النص لتبتعد الأزرار عنه */
             text-align: center;
         }
 
-        .header-icon {
+        /* حاوية الأزرار للحفاظ على تنسيقها الأفقي */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* إضافة مسافة مناسبة بين الأزرار */
+            flex-wrap: wrap; /* للسماح بنزول الأزرار لسطر جديد على الشاشات الصغيرة جداً */
+        }
+
+        /* تنسيق رابط الزر */
+        .app-button {
+            display: inline-block;
+            transition: transform 0.2s ease; /* تأثير سلس عند التمرير */
+        }
+
+        /* التحكم في حجم الصورة (الزر) */
+        .app-button img {
             width: 32px;
             height: 32px;
-            margin-bottom: 15px;
+            display: block;
+            border-radius: 50%; /* لجعل حواف الأيقونة دائرية ومتناسقة */
+            object-fit: cover;
         }
 
-        #video-player {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border-radius: 15px;
-            background: #111;
-            box-shadow: 0 4px 20px rgba(255,255,255,0.1);
-            border: none;
+        /* تأثير خفيف عند تحريك الماوس فوق الزر */
+        .app-button:hover {
+            transform: scale(1.1); /* تكبير الزر قليلاً بنسبة 10% */
+            opacity: 0.9;
         }
-
-        .video-list {
-            margin-top: 30px;
-            width: 100%;
-        }
-
-        .video-item {
-            padding: 15px;
-            background: #1a1a1a;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .video-item:hover { background: #333; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="https://images.icon-icons.com/1063/PNG/96/camcorder_256_icon-icons.com_76838.png" alt="Icon" class="header-icon">
-    
-    <iframe id="video-player" src="" allowfullscreen></iframe>
+    <!-- الصورة العلوية المضافة حديثاً (تم رفع موقعها للأعلى) -->
+    <div class="top-image-container">
+        <img src="https://www.emaratalyoum.com/polopoly_fs/1.1749156.1684417912!/image/image.jpg" alt="Top Banner Image">
+    </div>
 
-    <div id="list" class="video-list"></div>
-</div>
+    <!-- النص الذهبي بخط كايرو والوزن المطلوب أسفل الصورة مباشرة -->
+    <div class="subtitle-text">شاهد جميع مباريات</div>
 
-<script>
-    async function loadVideos() {
-        try {
-            // تأكد أن هذا الرابط هو رابط ملف .nt في مستودعك
-            const response = await fetch('https://raw.githubusercontent.com/abdelahidz/FILME/main/videos.nt');
-            const data = await response.text();
-            
-            const videos = data.split('\n').filter(line => line.trim() !== '');
-            const listDiv = document.getElementById('list');
-            const player = document.getElementById('video-player');
+    <!-- حاوية تجمع الأزرار الخمسة معاً -->
+    <div class="buttons-container">
+        <!-- الزر الأول الأساسي (تم تعديل الرابط بنجاح هنا) -->
+        <a href="https://koorasport.net/" 
+           target="_blank" 
+           class="app-button" 
+           title="الانتقال إلى كورة سبورت">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKfUBw8bk2OnjvG_syR611uW0aSB8XfcqBcDzSLLHC6A&s=10" alt="Button 1">
+        </a>
 
-            videos.forEach((url, index) => {
-                const div = document.createElement('div');
-                div.className = 'video-item';
-                div.innerText = 'حلقة ' + (index + 1);
-                div.onclick = () => {
-                    // تحويل رابط Vimeo العادي إلى رابط embed للعمل داخل الموقع
-                    let videoId = url.split('/').pop().split('?')[0];
-                    player.src = 'https://player.vimeo.com/video/' + videoId;
-                };
-                listDiv.appendChild(div);
-            });
-        } catch (error) {
-            console.error("خطأ في جلب البيانات:", error);
-        }
-    }
+        <!-- الزر الثاني -->
+        <a href="https://koorasport.net/" 
+           target="_blank" 
+           class="app-button" 
+           title="الانتقال إلى كورة سبورت">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1jdWIYRCfKycpQ2RJIlTNFKSsCWDlZJZt57lDJFTgUQ&s=10" alt="Button 2">
+        </a>
 
-    loadVideos();
-</script>
+        <!-- الزر الثالث -->
+        <a href="https://m.syrlive.com/" 
+           target="_blank" 
+           class="app-button" 
+           title="الانتقال إلى سير لايف">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhBr8HgE9s3VvHqnbLfnvblnZrwQrO3rUhKG8swSpfTQ&s=10" alt="Button 3">
+        </a>
+
+        <!-- الزر الرابع -->
+        <a href="https://www.livegoaltv.com/" 
+           target="_blank" 
+           class="app-button" 
+           title="الانتقال إلى لايف جول تي في">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ-OLoJOMJ7vdOfxVuEngoWy6B71pFFpbOGGjLFXtNWQ&s=10" alt="Button 4">
+        </a>
+
+        <!-- الزر الخامس الجديد -->
+        <a href="https://freedomgloryproject.com/" 
+           target="_blank" 
+           class="app-button" 
+           title="الانتقال إلى فريدوم جلوري">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS13mbFtMXsED-8i9UvdgqfD7WEM-eeW3QljPXvWvePrw&s=10" alt="Button 5">
+        </a>
+    </div>
 
 </body>
 </html>
