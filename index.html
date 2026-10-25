@@ -3,138 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق الواجهة السوداء</title>
-    <!-- استدعاء خط Cairo من جوجل ليعمل بشكل صحيح -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;900&display=swap" rel="stylesheet">
-    
+    <title>Free Fire Pro Sensitivity Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Cairo Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesomeIcons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* إعدادات الخلفية السوداء الداكنة جداً وتوسيط المحتوى */
         body {
-            background-color: #050505; /* لون أسود داكن جداً بناءً على طلبك */
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column; /* لترتيب الصورة في الأعلى والأزرار بالأسفل */
-            justify-content: flex-start; /* تم التعديل لرفع المحتوى والصورة إلى الأعلى قليلاً */
-            align-items: center;
-            gap: 20px; /* تقليل المسافة الإجمالية لتتناسب مع النص الجديد */
-            min-height: 100vh; /* ملء الشاشة بالكامل */
-            font-family: Arial, sans-serif;
-            box-sizing: border-box;
-        }
-
-        /* تنسيق حاوية الصورة العلوية */
-        .top-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 20px; /* إزاحة بسيطة من السقف العلوي للشاشة */
-            margin-bottom: 5px; 
-        }
-
-        .top-image-container img {
-            max-width: 100%;
-            height: auto;
-            max-height: 250px; /* تحديد أقصى ارتفاع مريح للعين */
-            border-radius: 8px; /* حواف دائرية خفيفة للصورة العلوية */
-            object-fit: contain;
-        }
-
-        /* تنسيق النص الذهبي أسفل الصورة */
-        .subtitle-text {
             font-family: 'Cairo', sans-serif;
-            font-weight: 300; /* وزن الخط المطلوب */
-            font-size: 30px; /* حجم الخط المطلوب (300 تم تطبيقها كوزن وحجم متناسق 30px) */
-            color: #FFD700; /* لون ذهبي ناصع ومميز */
-            margin: 0 0 30px 0; /* مسافة أسفل النص لتبتعد الأزرار عنه */
-            text-align: center;
+            background-color: #000000;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(220, 38, 38, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(15, 23, 42, 0.8) 0%, transparent 50%);
+            color: #f8fafc;
+            min-height: 100vh;
         }
-
-        /* حاوية الأزرار للحفاظ على تنسيقها الأفقي */
-        .buttons-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px; /* إضافة مسافة مناسبة بين الأزرار */
-            flex-wrap: wrap; /* للسماح بنزول الأزرار لسطر جديد على الشاشات الصغيرة جداً */
+        .glass-card {
+            background: rgba(13, 13, 18, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.1);
         }
-
-        /* تنسيق رابط الزر */
-        .app-button {
-            display: inline-block;
-            transition: transform 0.2s ease; /* تأثير سلس عند التمرير */
+        .glow-btn {
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            transition: all 0.3s ease;
         }
-
-        /* التحكم في حجم الصورة (الزر) */
-        .app-button img {
-            width: 32px;
-            height: 32px;
-            display: block;
-            border-radius: 50%; /* لجعل حواف الأيقونة دائرية ومتناسقة */
-            object-fit: cover;
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.7);
+            transform: translateY(-2px);
         }
-
-        /* تأثير خفيف عند تحريك الماوس فوق الزر */
-        .app-button:hover {
-            transform: scale(1.1); /* تكبير الزر قليلاً بنسبة 10% */
-            opacity: 0.9;
+        .custom-input {
+            background: rgba(20, 20, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-input:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+        }
+        /* مظهر مخصص لمربعات النتائج */
+        .stat-box {
+            background: linear-gradient(145deg, rgba(25, 25, 35, 0.6), rgba(15, 15, 20, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
-<body>
+<body class="flex flex-col items-center justify-center p-4">
 
-    <!-- الصورة العلوية المضافة حديثاً (تم رفع موقعها للأعلى) -->
-    <div class="top-image-container">
-        <img src="https://www.emaratalyoum.com/polopoly_fs/1.1749156.1684417912!/image/image.jpg" alt="Top Banner Image">
+    <!-- حاوية التطبيق الرئيسية -->
+    <div class="w-full max-w-lg glass-card rounded-3xl p-6 sm:p-8 my-6">
+        
+        <!-- رأس التطبيق والشعار -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-600/10 border border-red-500/30 mb-3 glow-btn overflow-hidden p-2">
+                <img src="https://raw.githubusercontent.com/0xme/ff-resources/refs/heads/main/pngs/300x300/icon_killed_2.png" alt="Logo" class="w-full h-full object-contain">
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-white tracking-wide"></h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">احصل على إعدادات الهيدشوت المثالية المخصصة لهاتفك بدقة عالية</p>
+        </div>
+
+        <!-- صندوق البحث والاختيار -->
+        <div class="space-y-5">
+            <div class="relative">
+                <label class="block text-xs font-bold text-slate-300 mb-2 uppercase tracking-wider">ابحث عن جهازك أو اختره:</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" id="deviceInput" placeholder="اكتب اسم هاتفك (مثال: Redmi, iPhone)..." 
+                        class="w-full custom-input text-white rounded-2xl py-3.5 pr-11 pl-4 text-sm focus:outline-none transition">
+                </div>
+                <!-- قائمة منسدلة ذكية تظهر عند الكتابة أو النقر -->
+                <div id="dropdownList" class="absolute z-20 w-full mt-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl max-h-48 overflow-y-auto hidden divide-y divide-slate-800">
+                    <!-- يتم تعبئتها ديناميكياً عبر الجافاسكريبت -->
+                </div>
+            </div>
+
+            <button onclick="generateConfig()" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-black py-4 rounded-2xl glow-btn transition active:scale-95 flex items-center justify-center gap-2 text-base">
+                <i class="fa-solid fa-bolt"></i> 
+            </button>
+        </div>
+
+        <!-- قسم النتائج (مخفي افتراضياً) -->
+        <div id="resultSection" class="hidden mt-8 space-y-6 border-t border-white/10 pt-6 transition-all duration-500">
+            
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="text-xs text-red-400 font-semibold block">الإعدادات الخاصة بـ:</span>
+                    <h3 id="targetDeviceName" class="text-lg font-black text-white">اسم الجهاز</h3>
+                </div>
+                <button onclick="copyConfig()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold px-4 py-2.5 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-regular fa-copy"></i> نسخ القيم
+                </button>
+            </div>
+
+            <!-- شبكة الحساسيات -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">العام (General)</span>
+                    <span id="resGeneral" class="text-2xl font-black text-red-500 mt-1 block">0</span>
+                </div>
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">النقطة الحمراء</span>
+                    <span id="resRedDot" class="text-2xl font-black text-white mt-1 block">0</span>
+                </div>
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">عدسة 2x</span>
+                    <span id="resScope2" class="text-2xl font-black text-white mt-1 block">0</span>
+                </div>
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">عدسة 4x</span>
+                    <span id="resScope4" class="text-2xl font-black text-white mt-1 block">0</span>
+                </div>
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">القناصة (AWM)</span>
+                    <span id="resAWM" class="text-2xl font-black text-white mt-1 block">0</span>
+                </div>
+                <div class="stat-box p-3.5 rounded-2xl text-center">
+                    <span class="text-[11px] text-slate-400 block font-semibold">النظر الحرة</span>
+                    <span id="resFreeLook" class="text-2xl font-black text-white mt-1 block">0</span>
+                </div>
+            </div>
+
+            <!-- معلومات إضافية (DPI وزر إطلاق النار) -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-3.5 text-center">
+                    <span class="text-[11px] text-red-300 font-bold block">مؤشر DPI المقترح:</span>
+                    <span id="resDpi" class="text-lg font-black text-red-400 mt-0.5 block">540</span>
+                </div>
+                <div class="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-3.5 text-center">
+                    <span class="text-[11px] text-slate-300 font-bold block">حجم زر الإطلاق:</span>
+                    <span id="resFireSize" class="text-lg font-black text-slate-200 mt-0.5 block">45%</span>
+                </div>
+            </div>
+
+            <!-- نصائح الهيدشوت -->
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+                <h4 class="text-xs font-bold text-red-400 flex items-center gap-1.5 mb-1.5">
+                    <i class="fa-solid fa-circle-info"></i> نصيحة احترافية:
+                </h4>
+                <p class="text-slate-400 text-xs leading-relaxed">
+                    قم بسحب زر الإطلاق بحركة خفيفة وسريعة للأعلى بعد تمركز الصليب بجانب الخصم. جرب الإعدادات في التدريب لفترة قصيرة لتعيّد ضبط استجابة الشاشة.
+                </p>
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- النص الذهبي بخط كايرو والوزن المطلوب أسفل الصورة مباشرة -->
-    <div class="subtitle-text">شاهد جميع مباريات</div>
-
-    <!-- حاوية تجمع الأزرار الخمسة معاً -->
-    <div class="buttons-container">
-        <!-- الزر الأول الأساسي (تم تعديل الرابط بنجاح هنا) -->
-        <a href="https://koorasport.net/" 
-           target="_blank" 
-           class="app-button" 
-           title="الانتقال إلى كورة سبورت">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKfUBw8bk2OnjvG_syR611uW0aSB8XfcqBcDzSLLHC6A&s=10" alt="Button 1">
-        </a>
-
-        <!-- الزر الثاني -->
-        <a href="https://koorasport.net/" 
-           target="_blank" 
-           class="app-button" 
-           title="الانتقال إلى كورة سبورت">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1jdWIYRCfKycpQ2RJIlTNFKSsCWDlZJZt57lDJFTgUQ&s=10" alt="Button 2">
-        </a>
-
-        <!-- الزر الثالث -->
-        <a href="https://m.syrlive.com/" 
-           target="_blank" 
-           class="app-button" 
-           title="الانتقال إلى سير لايف">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhBr8HgE9s3VvHqnbLfnvblnZrwQrO3rUhKG8swSpfTQ&s=10" alt="Button 3">
-        </a>
-
-        <!-- الزر الرابع -->
-        <a href="https://www.livegoaltv.com/" 
-           target="_blank" 
-           class="app-button" 
-           title="الانتقال إلى لايف جول تي في">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQ-OLoJOMJ7vdOfxVuEngoWy6B71pFFpbOGGjLFXtNWQ&s=10" alt="Button 4">
-        </a>
-
-        <!-- الزر الخامس الجديد -->
-        <a href="https://freedomgloryproject.com/" 
-           target="_blank" 
-           class="app-button" 
-           title="الانتقال إلى فريدوم جلوري">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS13mbFtMXsED-8i9UvdgqfD7WEM-eeW3QljPXvWvePrw&s=10" alt="Button 5">
-        </a>
+    <!-- نافذة منبثقة صغيرة للإشعارات (Toast) -->
+    <div id="toast" class="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-bold px-5 py-3 rounded-2xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50">
+        تم نسخ الإعدادات بنجاح! 🎯
     </div>
 
-</body>
-</html>
+    <!-- سكريبت البرمجة والبيانات -->
+    <script>
+        // قاعدة البيانات الشاملة المحدثة بالإعدادات المستخرجة
+        const database = {
+            "redmi 13c": { general: 100, redDot: 95, scope2: 90, scope4: 80, awm: 70, freeLook: 65, dpi: "550", fireSize: "45%" },
+            "redmi 12c": { general: 98, redDot: 92, scope2: 88, scope4: 78, awm: 68, freeLook: 63, dpi: "550", fireSize: "46%" },
+            "redmi 10c": { general: 150, redDot: 150, scope2: 120, scope4: 120, awm: 110, freeLook: 140, dpi: "550", fireSize: "45%" },
+            "redmi a2": { general: 95, redDot: 90, scope2: 85, scope4: 75, awm: 65, freeLook: 60, dpi: "530", fireSize: "50%" },
+            "redmi a2+": { general: 95, redDot: 90, scope2: 85, scope4: 75, awm: 65, freeLook: 60, dpi: "530", fireSize: "50%" },
+            "redmi note 12": { general: 110, redDot: 105, scope2: 100, scope4: 90, awm: 80, freeLook: 70, dpi: "560", fireSize: "47%" },
+            "redmi note 12 pro": { general: 115, redDot: 110, scope2: 105, scope4: 95, awm: 85, freeLook: 75, dpi: "570", fireSize: "46%" },
+            "redmi note 12 pro+": { general: 120, redDot: 115, scope2: 110, scope4: 100, awm: 90, freeLook: 80, dpi: "580", fireSize: "45%" },
+            "redmi note 11": { general: 105, redDot: 100, scope2: 95, scope4: 85, awm: 75, freeLook: 65, dpi: "550", fireSize: "48%" },
+            "redmi note 11s": { general: 108, redDot: 103, scope2: 98, scope4: 88, awm: 78, freeLook: 68, dpi: "555", fireSize: "47%" },
+            "redmi note 10": { general: 100, redDot: 95, scope2: 90, scope4: 80, awm: 70, freeLook: 60, dpi: "540", fireSize: "48%" },
+            "redmi 10": { general: 97, redDot: 92, scope2: 87, scope4: 77, awm: 67, freeLook: 57, dpi: "535", fireSize: "49%" },
+            "redmi 9a": { general: 90, redDot: 85, scope2: 80, scope4: 70, awm: 60, freeLook: 50, dpi: "530", fireSize: "52%" },
+            "redmi 9c": { general: 90, redDot: 85, scope2: 80, scope4: 70, awm: 60, freeLook: 50, dpi: "530", fireSize: "52%" },
+            "redmi 9": { general: 95, redDot: 90, scope2: 85, scope4: 75, awm: 65, freeLook: 55, dpi: "530", fireSize: "50%" },
+            "redmi k50i": { general: 120, redDot: 115, scope2: 110, scope4: 100, awm: 90, freeLook: 80, dpi: "600", fireSize: "43%" },
+            "redmi k50": { general: 122, redDot: 117, scope2: 112, scope4: 102, awm: 92, freeLook: 82, dpi: "600", fireSize: "43%" },
+            "redmi k40 gaming": { general: 125, redDot: 120, scope2: 115, scope4: 105, awm: 95, freeLook: 85, dpi: "610", fireSize: "42%" },
+            "iphone 6": { general: 155, redDot: 190, scope2: 142, scope4: 142, awm: 55, freeLook: 115, dpi: "افتراضي (iOS)", fireSize: "50%" },
+            "iphone 7": { general: 155, redDot: 190, scope2: 142, scope4: 142, awm: 55, freeLook: 115, dpi: "افتراضي (iOS)", fireSize: "50%" },
+            "iphone 8": { general: 155, redDot: 190, scope2: 142, scope4: 142, awm: 55, freeLook: 115, dpi: "افتراضي (iOS)", fireSize: "50%" },
+            "iphone x": { general: 170, redDot: 200, scope2: 165, scope4: 145, awm: 60, freeLook: 125, dpi: "افتراضي (iOS)", fireSize: "48%" },
+            "iphone 11": { general: 170, redDot: 200, scope2: 165, scope4: 145, awm: 60, freeLook: 125, dpi: "افتراضي (iOS)", fireSize: "48%" },
+            "iphone 12": { general: 198, redDot: 200, scope2: 190, scope4: 130, awm: 74, freeLook: 132, dpi: "افتراضي (iOS)", fireSize: "45%" },
+            "iphone 12 mini": { general: 175, redDot: 200, scope2: 165, scope4: 155, awm: 65, freeLook: 125, dpi: "افتراضي (iOS)", fireSize: "46%" },
+            "iphone 13": { general: 186, redDot: 200, scope2: 195, scope4: 155, awm: 78, freeLook: 145, dpi: "افتراضي (iOS)", fireSize: "46%" },
+            "iphone 13 mini": { general: 186, redDot: 200, scope2: 190, scope4: 165, awm: 72, freeLook: 138, dpi: "افتراضي (iOS)", fireSize: "46%" },
+            "iphone 13 pro": { general: 194, redDot: 200, scope2: 192, scope4: 165, awm: 75, freeLook: 140, dpi: "افتراضي (iOS)", fireSize: "44%" },
+            "iphone 13 pro max": { general: 194, redDot: 200, scope2: 192, scope4: 165, awm: 75, freeLook: 140, dpi: "افتراضي (iOS)", fireSize: "44%" },
+            "iphone 14": { general: 192, redDot: 200, scope2: 173, scope4: 173, awm: 82, freeLook: 135, dpi: "افتراضي (iOS)", fireSize: "45%" },
+            "iphone 14 plus": { general: 192, redDot: 200, scope2: 173, scope4: 173, awm: 82, freeLook: 135, dpi: "افتراضي (iOS)", fireSize: "45%" },
+            "iphone 14 pro max": { general: 194, redDot: 200, scope2: 198, scope4: 175, awm: 85, freeLook: 125, dpi: "افتراضي (iOS)", fireSize: "43%" },
+            "iphone 15": { general: 195, redDot: 200, scope2: 198, scope4: 178, awm: 88, freeLook: 162, dpi: "افتراضي (iOS)", fireSize: "44%" },
+            "iphone 15 plus": { general: 195, redDot: 200, scope2: 198, scope4: 178, awm: 88, freeLook: 162, dpi: "افتراضي (iOS)", fireSize: "44%" },
+            "iphone 15 pro": { general: 196, redDot: 200, scope2: 200, scope4: 180, awm: 90, freeLook: 165, dpi: "افتراضي (iOS)", fireSize: "42%" },
+            "iphone 15 pro max": { general: 196, redDot: 200, scope2: 200, scope4: 180, awm: 90, freeLook: 165, dpi: "افتراضي (iOS)", fireSize: "42%" },
+            "iphone 16": { general: 197, redDot: 200, scope2: 200, scope4: 182, awm: 82, freeLook: 168, dpi: "افتراضي (iOS)", fireSize: "43%" },
+            "iphone 16 plus": { general: 197, redDot: 200, scope2: 200, scope4: 182, awm: 82, freeLook: 168, dpi: "افتراضي (iOS)", fireSize: "43%" },
+            "iphone 16 pro": { general: 198, redDot: 200, scope2: 200, scope4: 185, awm: 95, freeLook: 170, dpi: "افتراضي (iOS)", fireSize: "42%" },
+            "iphone 16 pro max": { general: 198, redDot: 200, scope2: 200, scope4: 185, awm: 95, freeLook: 170, dpi: "افتراضي (iOS)", fireSize: "42%" },
+            "iphone 17 pro": { general: 200, redDot: 200, scope2: 200, scope4: 190, awm: 100, freeLook: 175, dpi: "افتراضي (iOS)", fireSize: "40%" },
+            "iphone 17 pro max": { general: 200, redDot: 200, scope2: 200, scope4: 190, awm: 100, freeLook: 175, dpi: "افتراضي (iOS)", fireSize: "40%" }
+        };
+
+        const input = document.getElementById('deviceInput');
+        const dropdown = document.getElementById('dropdownList');
+
+        // إظهار قائمة الاقتراحات عند الكتابة
+        input.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            dropdown.innerHTML = '';
+            
+            if (query.length === 0) {
+                dropdown.classList.add('hidden');
+                return;
